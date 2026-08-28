@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PatrocinadoresRouteImport } from './routes/patrocinadores'
 import { Route as OrganizadoresRouteImport } from './routes/organizadores'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PatrocinadoresRoiRouteImport } from './routes/patrocinadores_.roi'
+import { Route as PatrocinadoresEventosRouteImport } from './routes/patrocinadores_.eventos'
+import { Route as PatrocinadoresCalendarioRouteImport } from './routes/patrocinadores_.calendario'
 
 const PatrocinadoresRoute = PatrocinadoresRouteImport.update({
   id: '/patrocinadores',
@@ -28,35 +31,82 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PatrocinadoresRoiRoute = PatrocinadoresRoiRouteImport.update({
+  id: '/patrocinadores_/roi',
+  path: '/patrocinadores/roi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PatrocinadoresEventosRoute = PatrocinadoresEventosRouteImport.update({
+  id: '/patrocinadores_/eventos',
+  path: '/patrocinadores/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PatrocinadoresCalendarioRoute =
+  PatrocinadoresCalendarioRouteImport.update({
+    id: '/patrocinadores_/calendario',
+    path: '/patrocinadores/calendario',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/organizadores': typeof OrganizadoresRoute
   '/patrocinadores': typeof PatrocinadoresRoute
+  '/patrocinadores/calendario': typeof PatrocinadoresCalendarioRoute
+  '/patrocinadores/eventos': typeof PatrocinadoresEventosRoute
+  '/patrocinadores/roi': typeof PatrocinadoresRoiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/organizadores': typeof OrganizadoresRoute
   '/patrocinadores': typeof PatrocinadoresRoute
+  '/patrocinadores/calendario': typeof PatrocinadoresCalendarioRoute
+  '/patrocinadores/eventos': typeof PatrocinadoresEventosRoute
+  '/patrocinadores/roi': typeof PatrocinadoresRoiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/organizadores': typeof OrganizadoresRoute
   '/patrocinadores': typeof PatrocinadoresRoute
+  '/patrocinadores_/calendario': typeof PatrocinadoresCalendarioRoute
+  '/patrocinadores_/eventos': typeof PatrocinadoresEventosRoute
+  '/patrocinadores_/roi': typeof PatrocinadoresRoiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/organizadores' | '/patrocinadores'
+  fullPaths:
+    | '/'
+    | '/organizadores'
+    | '/patrocinadores'
+    | '/patrocinadores/calendario'
+    | '/patrocinadores/eventos'
+    | '/patrocinadores/roi'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/organizadores' | '/patrocinadores'
-  id: '__root__' | '/' | '/organizadores' | '/patrocinadores'
+  to:
+    | '/'
+    | '/organizadores'
+    | '/patrocinadores'
+    | '/patrocinadores/calendario'
+    | '/patrocinadores/eventos'
+    | '/patrocinadores/roi'
+  id:
+    | '__root__'
+    | '/'
+    | '/organizadores'
+    | '/patrocinadores'
+    | '/patrocinadores_/calendario'
+    | '/patrocinadores_/eventos'
+    | '/patrocinadores_/roi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   OrganizadoresRoute: typeof OrganizadoresRoute
   PatrocinadoresRoute: typeof PatrocinadoresRoute
+  PatrocinadoresCalendarioRoute: typeof PatrocinadoresCalendarioRoute
+  PatrocinadoresEventosRoute: typeof PatrocinadoresEventosRoute
+  PatrocinadoresRoiRoute: typeof PatrocinadoresRoiRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +132,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/patrocinadores_/roi': {
+      id: '/patrocinadores_/roi'
+      path: '/patrocinadores/roi'
+      fullPath: '/patrocinadores/roi'
+      preLoaderRoute: typeof PatrocinadoresRoiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patrocinadores_/eventos': {
+      id: '/patrocinadores_/eventos'
+      path: '/patrocinadores/eventos'
+      fullPath: '/patrocinadores/eventos'
+      preLoaderRoute: typeof PatrocinadoresEventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patrocinadores_/calendario': {
+      id: '/patrocinadores_/calendario'
+      path: '/patrocinadores/calendario'
+      fullPath: '/patrocinadores/calendario'
+      preLoaderRoute: typeof PatrocinadoresCalendarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +160,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OrganizadoresRoute: OrganizadoresRoute,
   PatrocinadoresRoute: PatrocinadoresRoute,
+  PatrocinadoresCalendarioRoute: PatrocinadoresCalendarioRoute,
+  PatrocinadoresEventosRoute: PatrocinadoresEventosRoute,
+  PatrocinadoresRoiRoute: PatrocinadoresRoiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -74,13 +74,13 @@ export function Sidebar({ tint }: { tint: "primary" | "lime" }) {
   );
 }
 
-export function Topbar({ persona, name }: { persona: string; name: string }) {
+export function Topbar({ persona, name, section = "Visão geral" }: { persona: string; name: string; section?: string }) {
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border/60 bg-background/80 px-6 backdrop-blur-xl lg:px-8">
       <div className="flex items-center gap-3 text-sm">
         <span className="text-muted-foreground">{persona}</span>
         <span className="text-muted-foreground">/</span>
-        <span className="font-semibold">Visão geral</span>
+        <span className="font-semibold">{section}</span>
       </div>
       <div className="flex items-center gap-3">
         <div className="hidden items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5 text-sm md:flex">

@@ -2,14 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { BarChart3, Calendar, Compass, Heart, Sparkles, Target } from "lucide-react";
 
 const items = [
-  { icon: Compass, label: "Descobrir", to: "/patrocinadores" },
-  { icon: Heart, label: "Meus eventos", to: "/patrocinadores/eventos" },
-  { icon: BarChart3, label: "ROI" },
+  { icon: Compass, label: "Descobrir", to: "/patrocinadores", key: "discover" },
+  { icon: Heart, label: "Meus eventos", to: "/patrocinadores/eventos", key: "events" },
+  { icon: BarChart3, label: "ROI", to: "/patrocinadores/roi", key: "roi" },
   { icon: Calendar, label: "Calendário" },
   { icon: Target, label: "Audiência" },
 ];
 
-export function SponsorSidebar({ active }: { active: "discover" | "events" }) {
+export function SponsorSidebar({ active }: { active: "discover" | "events" | "roi" }) {
   return (
     <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-border bg-surface/40 p-5 lg:block">
       <Link to="/" className="flex items-center gap-2">
@@ -21,10 +21,9 @@ export function SponsorSidebar({ active }: { active: "discover" | "events" }) {
         />
       </Link>
       <nav className="mt-8 space-y-1 text-sm">
-        {items.map((item, index) => {
+        {items.map((item) => {
           const Icon = item.icon;
-          const isActive =
-            (active === "discover" && index === 0) || (active === "events" && index === 1);
+          const isActive = item.key === active;
           const className = `flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors ${
             isActive
               ? "bg-lime/15 text-lime"

@@ -5,11 +5,11 @@ const items = [
   { icon: Compass, label: "Descobrir", to: "/patrocinadores", key: "discover" },
   { icon: Heart, label: "Meus eventos", to: "/patrocinadores/eventos", key: "events" },
   { icon: BarChart3, label: "ROI", to: "/patrocinadores/roi", key: "roi" },
-  { icon: Calendar, label: "Calendário" },
+  { icon: Calendar, label: "Calendário", to: "/patrocinadores/calendario", key: "calendar" },
   { icon: Target, label: "Audiência" },
 ];
 
-export function SponsorSidebar({ active }: { active: "discover" | "events" | "roi" }) {
+export function SponsorSidebar({ active }: { active: "discover" | "events" | "roi" | "calendar" }) {
   return (
     <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-border bg-surface/40 p-5 lg:block">
       <Link to="/" className="flex items-center gap-2">

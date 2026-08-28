@@ -1,8 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Activity, Search, Filter, MapPin, Users, Sparkles, Heart, ArrowRight, TrendingUp, Target, Calendar, BarChart3, Compass } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Search, Filter, MapPin, Users, Sparkles, ArrowRight, TrendingUp, Calendar, BarChart3 } from "lucide-react";
 import { AreaChart, BarChart, Donut } from "@/components/site/Chart";
 import { CountUp } from "@/components/site/CountUp";
 import { Topbar } from "./organizadores";
+import { SponsorSidebar } from "@/components/site/SponsorSidebar";
 
 export const Route = createFileRoute("/patrocinadores")({
   head: () => ({
@@ -14,38 +15,11 @@ export const Route = createFileRoute("/patrocinadores")({
   component: SponsorPage,
 });
 
-const nav = [
-  { icon: Compass, label: "Descobrir", active: true },
-  { icon: Heart, label: "Meus eventos" },
-  { icon: BarChart3, label: "ROI" },
-  { icon: Calendar, label: "Calendário" },
-  { icon: Target, label: "Audiência" },
-];
-
 function SponsorPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="flex">
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-border bg-surface/40 p-5 lg:block">
-          <Link to="/" className="flex items-center gap-2">
-          <img src="/src/components/img/Logo.svg" alt="Play Analytics" className="h-15" draggable={false} />
-        </Link>
-          <nav className="mt-8 space-y-1 text-sm">
-            {nav.map((n) => {
-              const Icon = n.icon;
-              return (
-                <a key={n.label} className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 ${n.active ? "bg-lime/15 text-lime" : "text-muted-foreground hover:bg-surface hover:text-foreground"}`}>
-                  <Icon className="h-4 w-4" />{n.label}
-                </a>
-              );
-            })}
-          </nav>
-          <div className="mt-8 rounded-2xl border border-border bg-gradient-card p-4">
-            <p className="text-xs uppercase tracking-widest text-lime">Brand match</p>
-            <p className="mt-2 text-sm font-semibold">3 novos eventos compatíveis</p>
-            <button className="mt-3 w-full rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground">Ver sugestões</button>
-          </div>
-        </aside>
+        <SponsorSidebar active="discover" />
         <main className="flex-1">
           <Topbar persona="Patrocinador" name="CEFE - UEL" />
           <div className="mx-auto max-w-7xl space-y-6 p-6 lg:p-8">

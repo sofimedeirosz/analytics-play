@@ -295,7 +295,7 @@ function MockSessionBanner() {
         </div>
 
         <span className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
-          Prototype only
+          Prototype 
         </span>
       </div>
     </div>

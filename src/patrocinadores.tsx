@@ -1,65 +1,171 @@
 import { Link } from "@tanstack/react-router";
-import { Activity, Search, Filter, MapPin, Users, Sparkles, Heart, ArrowRight, TrendingUp, Target, Calendar, BarChart3, Compass } from "lucide-react";
-import { AreaChart, BarChart, Donut } from "@/components/site/Chart";
+import {
+  Activity,
+  ArrowRight,
+  BarChart3,
+  Calendar,
+  Compass,
+  Filter,
+  Heart,
+  MapPin,
+  Menu,
+  Search,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Users,
+} from "lucide-react";
+
+import { BarChart } from "@/components/site/Chart";
 import { CountUp } from "@/components/site/CountUp";
 import { Topbar } from "@/components/site/OrganizerLayout";
 
-const nav = [
-  { icon: Compass, label: "Descobrir", active: true },
-  { icon: Heart, label: "Meus eventos" },
-  { icon: BarChart3, label: "ROI" },
-  { icon: Calendar, label: "Calendário" },
-  { icon: Target, label: "Audiência" },
-];
+export type SponsorNavKey = "discover" | "events" | "roi" | "calendar";
 
-export function SponsorPage() {
+const nav = [
+  { icon: Compass, label: "Descobrir", to: "/patrocinadores", key: "discover" },
+  { icon: Heart, label: "Meus eventos", to: "/patrocinadores/eventos", key: "events" },
+  { icon: BarChart3, label: "ROI", to: "/patrocinadores/roi", key: "roi" },
+  { icon: Calendar, label: "Calendário", to: "/patrocinadores/calendario", key: "calendar" },
+] as const;
+
+export function SponsorSidebar({ active }: { active: SponsorNavKey }) {
+  return (
+    <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-border bg-surface/40 p-5 lg:block">
+      <Link to="/" className="flex items-center gap-2">
+        <img
+          src="/src/components/img/Logo.svg"
+          alt="Play Analytics"
+          className="h-15"
+          draggable={false}
+        />
+      </Link>
+
+      <nav className="mt-8 space-y-1 text-sm">
+        {nav.map(({ icon: Icon, label, to, key }) => {
+          const isActive = key === active;
+
+          return (
+            <Link
+              key={label}
+              to={to}
+              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors ${
+                isActive
+                  ? "bg-lime/15 text-lime"
+                  : "text-muted-foreground hover:bg-surface hover:text-foreground"
+              }`}
+              activeProps={{ className: "bg-lime/15 text-lime" }}
+            >
+              <Icon className="h-4 w-4" />
+              {label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      <div className="mt-8 rounded-2xl border border-border bg-gradient-card p-4">
+        <p className="text-xs uppercase tracking-widest text-lime">Brand match</p>
+        <p className="mt-2 text-sm font-semibold">3 novos eventos compatíveis</p>
+        <Link
+          to="/patrocinadores"
+          className="mt-3 block w-full rounded-lg bg-primary px-3 py-2 text-center text-xs font-semibold text-primary-foreground"
+        >
+          Ver sugestões
+        </Link>
+      </div>
+    </aside>
+  );
+}
+
+export function SponsorShell({
+  active,
+  section,
+  children,
+}: {
+  active: SponsorNavKey;
+  section: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="min-h-screen bg-background">
-      <div className="flex">
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-border bg-surface/40 p-5 lg:block">
-          <Link to="/" className="flex items-center gap-2">
-          <img src="/src/components/img/Logo.svg" alt="Play Analytics" className="h-15" draggable={false} />
-        </Link>
-          <nav className="mt-8 space-y-1 text-sm">
-            {nav.map((n) => {
-              const Icon = n.icon;
-              return (
-                <a key={n.label} className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 ${n.active ? "bg-lime/15 text-lime" : "text-muted-foreground hover:bg-surface hover:text-foreground"}`}>
-                  <Icon className="h-4 w-4" />{n.label}
-                </a>
-              );
-            })}
-          </nav>
-          <div className="mt-8 rounded-2xl border border-border bg-gradient-card p-4">
-            <p className="text-xs uppercase tracking-widest text-lime">Brand match</p>
-            <p className="mt-2 text-sm font-semibold">3 novos eventos compatíveis</p>
-            <button className="mt-3 w-full rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground">Ver sugestões</button>
-          </div>
-        </aside>
-        <main className="flex-1">
-          <Topbar persona="Patrocinador" name="CEFE - UEL" />
-          <div className="mx-auto max-w-7xl space-y-6 p-6 lg:p-8">
-            <HeaderBar />
-            <KpiRow />
-            <RoiChart />
-            <Filters />
-            <EventsGrid />
-            <Suggestions />
-          </div>
+      <div className="flex min-h-screen">
+        <SponsorSidebar active={active} />
+        <main className="min-w-0 flex-1">
+          <SponsorTopbar section={section} />
+          <div className="mx-auto max-w-7xl space-y-6 p-4 sm:p-6 lg:p-8">{children}</div>
         </main>
       </div>
     </div>
   );
 }
 
+function SponsorTopbar({ section }: { section: string }) {
+  return (
+    <header className="border-b border-border bg-background/90 px-4 py-3 backdrop-blur sm:px-6 lg:px-8">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2 lg:hidden">
+          <Menu className="h-5 w-5 text-lime" />
+          <span className="font-display font-bold">Play Analytics</span>
+        </div>
+        <div className="hidden text-sm text-muted-foreground lg:block font-bold">
+          Patrocinador
+          <span className="mx-2 text-border">/</span>
+          {section}
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="hidden text-right sm:block">
+            <span className="block text-xs text-muted-foreground font-bold">Patrocinador</span>
+            <span className="text-sm font-semibold">CEFE - UEL</span>
+          </span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-sm font-bold text-primary">
+            CE
+          </span>
+        </div>
+      </div>
+
+      <nav className="mt-3 flex gap-2 overflow-x-auto pb-1 lg:hidden">
+        {nav.map(({ icon: Icon, label, to, key }) => (
+          <Link
+            key={label}
+            to={to}
+            className="flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-muted-foreground"
+            activeProps={{ className: "bg-lime/15 text-lime" }}
+            activeOptions={{ exact: key === "discover" }}
+          >
+            <Icon className="h-3.5 w-3.5" />
+            {label}
+          </Link>
+        ))}
+      </nav>
+    </header>
+  );
+}
+
+export function SponsorPage() {
+  return (
+    <SponsorShell active="discover" section="Descobrir">
+      <HeaderBar />
+      <KpiRow />
+      <RoiChart />
+      <Filters />
+      <EventsGrid />
+      <Suggestions />
+    </SponsorShell>
+  );
+}
+
 function HeaderBar() {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <h1 className="font-display text-3xl font-bold tracking-tight">Descubra eventos para a CEFE - UEL</h1>
-        <p className="mt-1 text-sm text-muted-foreground">87 eventos no Paraná esta temporada — <span className="text-lime font-semibold">12 com alto fit</span> com sua marca.</p>
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="min-w-0">
+        <h1 className="max-w-3xl text-balance text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+          Descubra eventos para a CEFE - UEL
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          87 eventos no Paraná esta temporada — <span className="font-semibold text-lime">12 com alto fit</span> com sua marca.
+        </p>
       </div>
-      <button className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow">
+      <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow sm:w-auto">
         <Sparkles className="h-4 w-4" /> Match inteligente
       </button>
     </div>
@@ -144,12 +250,15 @@ function Filters() {
   const chips = ["Todas modalidades", "Corrida", "Ciclismo", "Trail", "Triatlo", "Curitiba", "Norte PR", "Público 25-44"];
   return (
     <div className="rounded-2xl border border-border bg-surface p-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex flex-1 items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <input placeholder="Buscar evento, cidade ou modalidade…" className="flex-1 bg-transparent outline-none placeholder:text-muted-foreground" />
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm">
+          <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
+          <input
+            placeholder="Buscar evento, cidade ou modalidade…"
+            className="w-full min-w-0 bg-transparent outline-none placeholder:text-muted-foreground"
+          />
         </div>
-        <button className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm">
+        <button className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm sm:w-auto">
           <Filter className="h-4 w-4" /> Filtros
         </button>
       </div>
@@ -193,7 +302,7 @@ function EventsGrid() {
               <p className="font-display text-lg font-bold text-lime">{e.roi}</p>
             </div>
           </div>
-          <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow">
+          <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-glow">
             Patrocinar <ArrowRight className="h-4 w-4" />
           </button>
         </div>
@@ -210,12 +319,12 @@ function Suggestions() {
           <span className="inline-flex items-center gap-2 rounded-full bg-background/20 px-3 py-1 text-xs font-semibold text-primary-foreground backdrop-blur">
             <Sparkles className="h-3 w-3" /> Inteligência da plataforma
           </span>
-          <h3 className="mt-3 font-display text-2xl font-bold text-primary-foreground md:text-3xl">
+          <h3 className="mt-3 text-balance text-2xl font-bold text-primary-foreground md:text-3xl">
             3 eventos com 90%+ de match esperam por você.
           </h3>
           <p className="mt-2 text-primary-foreground/80">Baseado no seu público-alvo, território e tickets anteriores.</p>
         </div>
-        <button className="rounded-full bg-lime px-5 py-3 text-sm font-semibold text-lime-foreground shadow-lime">Ver sugestões</button>
+        <button className="w-full rounded-full bg-lime px-5 py-3 text-sm font-semibold text-lime-foreground shadow-lime md:w-auto">Ver sugestões</button>
       </div>
     </div>
   );

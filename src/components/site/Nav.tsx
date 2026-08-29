@@ -38,7 +38,7 @@ export function Nav() {
             href="#beneficios"
             className="transition-colors hover:text-foreground"
           >
-            Beneficios
+            Benefícios
           </a>
         </nav>
 

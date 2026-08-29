@@ -9,19 +9,21 @@ import {
   Search,
   Sparkles,
   TrendingUp,
+  Trophy,
   Users,
 } from "lucide-react";
 
 import { BarChart } from "@/components/site/Chart";
 import { CountUp } from "@/components/site/CountUp";
 
-export type SponsorNavKey = "discover" | "events" | "roi" | "calendar";
+export type SponsorNavKey = "discover" | "events" | "roi" | "calendar" | "ranking";
 
 const nav = [
   { icon: Compass, label: "Descobrir", to: "/patrocinadores", key: "discover" },
   { icon: Heart, label: "Meus eventos", to: "/patrocinadores/eventos", key: "events" },
   { icon: BarChart3, label: "ROI", to: "/patrocinadores/roi", key: "roi" },
   { icon: Calendar, label: "Calendário", to: "/patrocinadores/calendario", key: "calendar" },
+  { icon: Trophy, label: "Ranking de eventos", to: "/organizadores/ranking", key: "ranking" },
 ] as const;
 
 export function SponsorSidebar({ active }: { active: SponsorNavKey }) {

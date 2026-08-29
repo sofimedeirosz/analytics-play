@@ -40,10 +40,10 @@ export function Topbar({
   return (
     <header className="border-b border-border bg-background/90 px-4 py-3 backdrop-blur sm:px-6 lg:px-8">
       <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2 lg:hidden">
+        <Link to="/" className="flex items-center gap-2 lg:hidden">
           <Menu className="h-5 w-5 text-lime" />
           <span className="font-display font-bold">Play Analytics</span>
-        </div>
+        </Link>
         <div className="hidden text-sm text-muted-foreground lg:block">
           {persona}
           <span className="mx-2 text-border">/</span>

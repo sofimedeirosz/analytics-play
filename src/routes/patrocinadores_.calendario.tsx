@@ -36,9 +36,7 @@ function CalendarPage() {
               Calendário de eventos
             </h1>
           </div>
-          <button className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-            Exportar agenda
-          </button>
+
         </div>
 
         <div className="mt-6 grid gap-5 xl:grid-cols-[1.4fr_0.9fr]">

@@ -1,24 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Activity,
-  ArrowRight,
   BarChart3,
   Calendar,
   Compass,
-  Filter,
   Heart,
   MapPin,
   Menu,
   Search,
   Sparkles,
-  Target,
   TrendingUp,
   Users,
 } from "lucide-react";
 
 import { BarChart } from "@/components/site/Chart";
 import { CountUp } from "@/components/site/CountUp";
-import { Topbar } from "@/components/site/OrganizerLayout";
 
 export type SponsorNavKey = "discover" | "events" | "roi" | "calendar";
 
@@ -165,9 +160,6 @@ function HeaderBar() {
           87 eventos no Paraná esta temporada — <span className="font-semibold text-lime">12 com alto fit</span> com sua marca.
         </p>
       </div>
-      <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow sm:w-auto">
-        <Sparkles className="h-4 w-4" /> Match inteligente
-      </button>
     </div>
   );
 }
@@ -258,9 +250,6 @@ function Filters() {
             className="w-full min-w-0 bg-transparent outline-none placeholder:text-muted-foreground"
           />
         </div>
-        <button className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm sm:w-auto">
-          <Filter className="h-4 w-4" /> Filtros
-        </button>
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {chips.map((c, i) => (
@@ -302,9 +291,6 @@ function EventsGrid() {
               <p className="font-display text-lg font-bold text-lime">{e.roi}</p>
             </div>
           </div>
-          <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-glow">
-            Patrocinar <ArrowRight className="h-4 w-4" />
-          </button>
         </div>
       ))}
     </div>
@@ -324,7 +310,6 @@ function Suggestions() {
           </h3>
           <p className="mt-2 text-primary-foreground/80">Baseado no seu público-alvo, território e tickets anteriores.</p>
         </div>
-        <button className="w-full rounded-full bg-lime px-5 py-3 text-sm font-semibold text-lime-foreground shadow-lime md:w-auto">Ver sugestões</button>
       </div>
     </div>
   );

@@ -19,9 +19,7 @@ function EventsPage() {
               Eventos ativos e em destaque
             </h1>
           </div>
-          <button className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-            Nova parceria
-          </button>
+
         </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
